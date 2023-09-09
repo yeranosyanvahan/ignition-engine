@@ -43,3 +43,5 @@ def vhzmeasure(nsample = 3000):
         Vlt = np.average(Vind[Vind > 50])
         return Vlt,Hz 
 
+if __name__ == '__main__':
+      print("Voltage: {:.2f} V \n Frequency: {:.2f} Hz".format(vhzmeasure()))
