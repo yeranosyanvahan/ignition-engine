@@ -24,8 +24,10 @@ def read_analog(channel):
     return bus.read_byte(pcf8591_addr)
 
 
-def vhzmeasure(nsample = 3000):
+def vhzmeasure(nsample = 1000):
         VT = np.array([(read_analog(CHANNEL), time.monotonic_ns()//1000000) for _ in range(nsample)])
+
+        print(VT)
 
         MILISECOND = 1
         VOLT = 1
