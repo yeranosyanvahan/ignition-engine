@@ -27,4 +27,4 @@ def read_analog(channel):
 import time
 with open(FILENAME,'w') as data:
   data.write("Voltage,Time_ms \n")
-  data.write('\n'.join([f"{str(read_analog(CHANNEL)).rjust(3,'0')},{time.monotonic_ns()/1000000}" for _ in range(1000)]))
+  data.write('\n'.join([f"{str(read_analog(CHANNEL)).rjust(3,'0')},{time.monotonic_ns()//1000000}" for _ in range(1000)]))
