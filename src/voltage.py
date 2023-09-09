@@ -44,4 +44,4 @@ def vhzmeasure(nsample = 3000):
         return Vlt,Hz 
 
 if __name__ == '__main__':
-      print("Voltage: {:.2f} V \n Frequency: {:.2f} Hz".format(vhzmeasure()))
+      print("Voltage: {:.2f} V \n Frequency: {:.2f} Hz".format(*vhzmeasure()))
