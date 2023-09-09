@@ -1,7 +1,8 @@
 import smbus
+import numpy as np
+import time 
 
 CHANNEL = 0
-FILENAME = "sampledata.csv"
 
 # I2C address of the PCF8591
 pcf8591_addr = 0x48
@@ -23,8 +24,22 @@ def read_analog(channel):
     return bus.read_byte(pcf8591_addr)
 
 
-# Read the analog voltage from all 4 channels and print them to the console
-import time
-with open(FILENAME,'w') as data:
-  data.write("Voltage,Time_ms \n")
-  data.write('\n'.join([f"{str(read_analog(CHANNEL)).rjust(3,'0')},{time.monotonic_ns()//1000000}" for _ in range(1000)]))
+def vhzmeasure(nsample = 3000):
+        VT = np.array([read_analog(CHANNEL), time.monotonic_ns()//1000 for _ in range(nsample)])
+
+        MILISECOND = 1000
+        VOLT = 1
+
+        V, T  = VT[5:-5].astype(int).T
+        index = np.where( (V[2:] <= V[1:-1]) & (V[1:-1] > V [:-2]))[0]
+
+        Vind = V[index]*VOLT
+        Tind = T[index]
+
+        dT = np.diff(Tind)
+        print(dT)
+        Hz = 1000*MILISECOND / np.average(dT[(dT > 5*MILISECOND) & (dT < 30*MILISECOND)])
+
+        Vlt = np.average(Vind[Vind > 50])
+        return Vlt,Hz 
+
