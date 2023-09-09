@@ -27,13 +27,14 @@ def read_analog(channel):
 def vhzmeasure(nsample = 1000):
         VT = np.array([(read_analog(CHANNEL), time.monotonic_ns()//1000000) for _ in range(nsample)])
 
-        print(VT)
-
-        MILISECOND = 1
+        MILISECOND = 1000
         VOLT = 1
 
         V, T  = VT[5:-5].astype(int).T
         index = np.where( (V[2:] <= V[1:-1]) & (V[1:-1] > V [:-2]))[0]
+
+        if np.all(V < 50):
+              return 0,0
 
         Vind = V[index]*VOLT
         Tind = T[index]
