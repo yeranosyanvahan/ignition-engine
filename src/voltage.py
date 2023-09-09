@@ -33,7 +33,7 @@ def vhzmeasure(nsample = 1000):
         V, T  = VT[5:-5].astype(int).T
         index = np.where( (V[2:] <= V[1:-1]) & (V[1:-1] > V [:-2]))[0]
 
-        if np.all(V < 50):
+        if np.all(V < 50) or len(index) < 10:
               return 0,0
 
         Vind = V[index]*VOLT
@@ -46,4 +46,4 @@ def vhzmeasure(nsample = 1000):
         return Vlt,Hz 
 
 if __name__ == '__main__':
-      print("Voltage: {:.2f} V \n Frequency: {:.2f} Hz".format(*vhzmeasure()))
+      print("Voltage: {:.2f} Volts  Frequency: {:.2f} Hz".format(*vhzmeasure()))
