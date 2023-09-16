@@ -25,10 +25,7 @@ def read_analog(channel):
 
 
 def vhzmeasure(nsample = 1000):
-        start = time.time()
-        print('start')
         VT = np.array([(read_analog(CHANNEL), time.monotonic_ns()//1000) for _ in range(nsample)])
-        print(time.time()-start)
 
         MILISECOND = 1000
         VOLT = 1
@@ -49,4 +46,5 @@ def vhzmeasure(nsample = 1000):
         return Vlt,Hz 
 
 if __name__ == '__main__':
-      print("Voltage: {:.2f} Volts  Frequency: {:.2f} Hz".format(*vhzmeasure()))
+      while True:
+            print("Voltage: {:.2f} Volts  Frequency: {:.2f} Hz".format(*vhzmeasure()))
