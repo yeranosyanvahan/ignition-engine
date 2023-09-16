@@ -47,7 +47,7 @@ if __name__ == "__main__":
     input("Press Enter to continue...")
 
     # Example: Turn off a relay
-    relay_controller.up("relay1")
+    #relay_controller.up("relay1")
 
     # Clean up GPIO pins when done
     relay_controller.cleanup()
