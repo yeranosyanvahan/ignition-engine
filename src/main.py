@@ -52,7 +52,7 @@ class WatchLoop:
       TIME_LATENCY_TO_KILL_ENGINE = 10
       TIME_LATENCY_TO_START_ENGINE = 10
       TIME_START_TO_START_ENGINE = 10
-      TIME_START_ENGINE_TO_OPEN_GRID = 5
+      TIME_START_ENGINE_TO_OPEN_GRID = 3
 
       def __init__(self, controller: Controller):
             self.controller = controller
@@ -77,6 +77,7 @@ class WatchLoop:
                   self.controller.killengine()
             
             if not gridstatus and enginestatus and \
+               self.controller.off('podsos')
                self.lasttime['startengine'] + WatchLoop.TIME_START_ENGINE_TO_OPEN_GRID < time.time():
                   self.controller.genopengrid()
 
