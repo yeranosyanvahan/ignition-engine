@@ -16,6 +16,10 @@ class RelayController:
         # Set the pins as OUTPUT
         GPIO.setup(list(self.relay_pins.values()), GPIO.OUT)
 
+        # Set all relays to the "up" state (HIGH)
+        for relay_pin in self.relay_pins.values():
+            GPIO.output(relay_pin, GPIO.HIGH)
+
     def up(self, relay_name):
         if relay_name in self.relay_pins:
             GPIO.output(self.relay_pins[relay_name], GPIO.HIGH)
@@ -36,13 +40,13 @@ class RelayController:
 if __name__ == "__main__":
     relay_controller = RelayController()
 
-    # Turn on a relay
+    # Example: Turn on a relay
     relay_controller.up("relay1")
 
     # Wait for a few seconds (example delay)
     input("Press Enter to continue...")
 
-    # Turn off a relay
+    # Example: Turn off a relay
     relay_controller.down("relay1")
 
     # Clean up GPIO pins when done
