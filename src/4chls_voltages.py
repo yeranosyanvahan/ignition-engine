@@ -28,4 +28,4 @@ def read_voltage(channel):
 while True:
     voltages = [read_voltage(i) for i in range(2)]
     
-    print("Analog voltages: {:.2f} V, {:.2f} V, {:.2f} V, {:.2f} V".format(*voltages))
+    print("Analog voltages: {:.2f} V, {:.2f} V".format(*voltages))
