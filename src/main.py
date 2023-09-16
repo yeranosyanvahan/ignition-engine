@@ -40,5 +40,8 @@ if __name__ == '__main__':
                   controller.on('relay2')
                   controller.off('relay3')
                   controller.off('relay4')
+                  time.sleep(2)
+                  controller.off('relay1')
+                  time.sleep(10)
 
                   
