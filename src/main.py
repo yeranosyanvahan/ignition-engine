@@ -29,7 +29,7 @@ class VHZ:
             VT = np.array([(VHZ.read_analog(VHZ.CHANNEL), time.monotonic_ns()//1000) for _ in range(nsample)])
 
             MILISECOND = 1000
-            VOLT = 1
+            VOLT = 1.052
 
             V, T  = VT[5:-5].astype(int).T
             index = np.where( (V[2:] <= V[1:-1]) & (V[1:-1] > V [:-2]))[0]
@@ -45,3 +45,8 @@ class VHZ:
 
             Vlt = np.average(Vind[Vind > 50])
             return Vlt,Hz 
+    
+
+if __name__ == '__main__':
+      while True:
+            print("Voltage: {:.2f} Volts  Frequency: {:.2f} Hz".format(*VHZ.vhzmeasure()))
