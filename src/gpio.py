@@ -20,13 +20,13 @@ class RelayController:
         for relay_pin in self.relay_pins.values():
             GPIO.output(relay_pin, GPIO.HIGH)
 
-    def up(self, relay_name):
+    def off(self, relay_name):
         if relay_name in self.relay_pins:
             GPIO.output(self.relay_pins[relay_name], GPIO.HIGH)
         else:
             print(f"Unknown relay: {relay_name}")
 
-    def down(self, relay_name):
+    def on(self, relay_name):
         if relay_name in self.relay_pins:
             GPIO.output(self.relay_pins[relay_name], GPIO.LOW)
         else:
@@ -41,13 +41,16 @@ if __name__ == "__main__":
     relay_controller = RelayController()
 
     # Example: Turn on a relay
-    relay_controller.down("relay1")
+    relay_controller.on("relay1")
+    relay_controller.on("relay3")
+    relay_controller.on("relay4")
 
     # Wait for a few seconds (example delay)
     input("Press Enter to continue...")
+    relay_controller.off("relay2")
 
     # Example: Turn off a relay
-    #relay_controller.up("relay1")
+    relay_controller.off("relay1")
 
     # Clean up GPIO pins when done
     relay_controller.cleanup()
