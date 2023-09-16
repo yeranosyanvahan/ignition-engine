@@ -26,6 +26,6 @@ def read_voltage(channel):
 
 # Read the analog voltage from all 4 channels and print them to the console
 while True:
-    voltages = [read_voltage(i+1) for i in range(4)]
+    voltages = [read_voltage(i) for i in range(4)]
     
     print("Analog voltages: {:.2f} V, {:.2f} V, {:.2f} V, {:.2f} V".format(*voltages))
