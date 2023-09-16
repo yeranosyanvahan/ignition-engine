@@ -67,10 +67,10 @@ class WatchLoop:
                   "gridtrue": 0
             }
 
-      def update(self, gridstatus, enginestatus):
+      def tick(self, gridstatus, enginestatus):
             self.lasttime['gridtrue' if gridstatus else 'gridfalse'] = time.time()
             self.lasttime['enginetrue' if enginestatus else 'enginefalse'] = time.time()
-            
+
             if gridstatus and enginestatus and \
                self.lasttime['gridfalse'] + WatchLoop.TIME_KILL_TO_KILL_ENGINE < time.time():
                   self.controller.killengine()
