@@ -25,6 +25,4 @@ def isgridon():
 
 if __name__ == '__main__':
       while True:
-            time.sleep(0.2)
-
             print("EngineStatus: %r, GridStatus: %r" % (isenginerunning(), isgridon()))
