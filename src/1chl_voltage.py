@@ -24,7 +24,7 @@ def read_voltage(channel):
 
     return voltage
 
-# Read the analog voltage from all 4 channels and print them to the console
+# Read the analog voltage from one channels and print them to the console
 if __name__ == "__main__":
     channel = int(input("enter channel"))
     while True:    
