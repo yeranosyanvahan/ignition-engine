@@ -35,7 +35,7 @@ if __name__ == '__main__':
                   controller.off('relay1')
                   controller.on('relay2')
                   controller.on('relay3')
-                  controller.on('relay4')
+                  controller.off('relay4')
             else:
                   controller.on('relay1')
                   controller.on('relay2')
