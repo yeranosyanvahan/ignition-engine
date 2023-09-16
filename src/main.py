@@ -101,6 +101,15 @@ if __name__ == '__main__':
 
             print("GridStatus: %r, EngineStatus: %r" % (gridstatus, enginestatus))
 
-            loop.tick(gridstatus, enginestatus)
+            try:
+                  loop.tick(gridstatus, enginestatus)
+
+            except OSError as e:
+                  if "[Errno 121]" in str(e) and "Remote I/O error" in str(e):
+                        print("Power Issue")
+                  else:
+                       print(f"OSError occured: {e}")
+                  time.sleep(2)
+
 
                   
