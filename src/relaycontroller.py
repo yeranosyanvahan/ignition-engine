@@ -32,6 +32,10 @@ class RelayController:
         else:
             print(f"Unknown relay: {relay_name}")
 
+
+    def __del__(self):
+        self.cleanup()
+
     def cleanup(self):
         # Clean up and release the GPIO pins
         GPIO.cleanup()
