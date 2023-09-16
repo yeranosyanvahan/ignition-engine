@@ -22,7 +22,23 @@ def isgridon():
 
       return sum(tmp) > 127*SAMPLE
 
-
 if __name__ == '__main__':
+      controller = RelayController()
       while True:
-            print("EngineStatus: %r, GridStatus: %r" % (isenginerunning(), isgridon()))
+            if isgridon():
+                  controller.off('relay1')
+                  controller.off('relay2')
+                  controller.off('relay3')
+                  controller.off('relay4')
+            elif isenginerunning():
+                  controller.on('relay1')
+                  controller.off('relay2')
+                  controller.on('relay3')
+                  controller.on('relay4')
+            else:
+                  controller.on('relay1')
+                  controller.on('relay2')
+                  controller.off('relay3')
+                  controller.off('relay4')
+
+                  
