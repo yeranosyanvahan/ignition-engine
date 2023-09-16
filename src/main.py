@@ -20,7 +20,7 @@ def isgridon():
 
       tmp = [VHZ.read_analog(CHANNEL) for _ in range(SAMPLE)]
 
-      return sum(tmp) < 127*SAMPLE
+      return sum(tmp) > 127*SAMPLE
 
 
 if __name__ == '__main__':
