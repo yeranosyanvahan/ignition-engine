@@ -49,7 +49,8 @@ class Controller:
             self.relaycontroller.off('starter')
 
 class WatchLoop:
-      TIME_KILL_TO_KILL_ENGINE = 10
+      TIME_LATENCY_TO_KILL_ENGINE = 10
+      TIME_LATENCY_TO_START_ENGINE = 10
       TIME_START_TO_START_ENGINE = 10
       TIME_START_ENGINE_TO_OPEN_GRID = 5
 
@@ -72,7 +73,7 @@ class WatchLoop:
             self.lasttime['enginetrue' if enginestatus else 'enginefalse'] = time.time()
 
             if gridstatus and enginestatus and \
-               self.lasttime['gridfalse'] + WatchLoop.TIME_KILL_TO_KILL_ENGINE < time.time():
+               self.lasttime['gridfalse'] + WatchLoop.TIME_LATENCY_TO_KILL_ENGINE < time.time():
                   self.controller.killengine()
             
             if not gridstatus and enginestatus and \
@@ -80,7 +81,8 @@ class WatchLoop:
                   self.controller.genopengrid()
 
             if not gridstatus and not enginestatus:
-               if self.lasttime['startengine'] + WatchLoop.TIME_START_TO_START_ENGINE < time.time():
+               if self.lasttime['startengine'] + WatchLoop.TIME_START_TO_START_ENGINE < time.time() and \
+                  self.lasttime['gridtrue'] + WatchLoop.TIME_LATENCY_TO_START_ENGINE < time.time():
                   self.controller.startengine()
                   self.lasttime['startengine'] = time.time()
             
