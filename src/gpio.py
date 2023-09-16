@@ -10,7 +10,7 @@ class RelayController:
             "relay1": 17,
             "relay2": 27,
             "relay3": 22,
-            "relay4": 23,
+            "relay4": 24,
         }
 
         # Set the pins as OUTPUT
@@ -41,13 +41,13 @@ if __name__ == "__main__":
     relay_controller = RelayController()
 
     # Example: Turn on a relay
-    relay_controller.up("relay1")
+    relay_controller.down("relay1")
 
     # Wait for a few seconds (example delay)
     input("Press Enter to continue...")
 
     # Example: Turn off a relay
-    relay_controller.down("relay1")
+    relay_controller.up("relay1")
 
     # Clean up GPIO pins when done
     relay_controller.cleanup()
