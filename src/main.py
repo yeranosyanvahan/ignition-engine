@@ -45,7 +45,10 @@ class VHZ:
 
             Vlt = np.average(Vind[Vind > 50])
             return Vlt,Hz 
-    
+
+class RELLEY:
+    def __init__()
+    RELLEYS = []
 
 if __name__ == '__main__':
       while True:
