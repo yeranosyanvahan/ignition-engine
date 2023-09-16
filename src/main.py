@@ -25,6 +25,7 @@ def isgridon():
 if __name__ == '__main__':
       controller = RelayController()
       while True:
+            print("EngineStatus: %r, GridStatus: %r" % (isenginerunning(), isgridon()))
             if isgridon():
                   controller.off('relay1')
                   controller.off('relay2')
