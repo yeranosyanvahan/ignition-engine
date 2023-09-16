@@ -27,22 +27,26 @@ if __name__ == '__main__':
       while True:
             print("EngineStatus: %r, GridStatus: %r" % (isenginerunning(), isgridon()))
             if isgridon():
-                  controller.off('relay1')
-                  controller.off('relay2')
-                  controller.off('relay3')
-                  controller.off('relay4')
+                  # cancy miacats
+                  controller.off('podsos')
+                  controller.off('onoff')
+                  controller.off('starter')
+                  controller.off('ongen')
+
             elif isenginerunning():
-                  controller.off('relay1')
-                  controller.on('relay2')
-                  controller.on('relay3')
-                  controller.off('relay4')
+                  # xodats
+                  controller.off('starter')
+                  controller.off('podsos')
+                  controller.on('onoff')
+                  controller.on('ongen')
             else:
-                  controller.on('relay1')
-                  controller.on('relay2')
-                  controller.off('relay3')
-                  controller.off('relay4')
+                  # xodelu 2/10 sec
+                  controller.on('starter')
+                  controller.on('podsos')
+                  controller.on('onoff')
+                  controller.off('ongen')
                   time.sleep(2)
-                  controller.off('relay1')
+                  controller.off('starter')
                   time.sleep(10)
 
                   

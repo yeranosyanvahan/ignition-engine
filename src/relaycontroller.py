@@ -7,10 +7,10 @@ class RelayController:
 
         # Define the GPIO pins for the relays
         self.relay_pins = {
-            "relay1": 17,
-            "relay2": 27,
-            "relay3": 22,
-            "relay4": 24,
+            "podsos": 17,
+            "onoff": 27,
+            "starter": 22,
+            "ongen": 24,
         }
 
         # Set the pins as OUTPUT
