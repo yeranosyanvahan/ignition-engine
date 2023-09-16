@@ -22,31 +22,79 @@ def isgridon():
 
       return sum(tmp) > 127*SAMPLE
 
-if __name__ == '__main__':
-      controller = RelayController()
-      while True:
-            print("EngineStatus: %r, GridStatus: %r" % (isenginerunning(), isgridon()))
-            if isgridon():
-                  # cancy miacats
-                  controller.off('podsos')
-                  controller.off('onoff')
-                  controller.off('starter')
-                  controller.off('ongen')
+class Controller:
+      def __init__(self, relaycontroller):
+            self.relaycontroller = relaycontroller
+            self.on = relaycontroller.on
+            self.off = relaycontroller.off
+      
+      def genopengrid(self):
+            self.relaycontroller.off('starter')
+            self.relaycontroller.off('podsos')
+            self.relaycontroller.on('onoff')
+            self.relaycontroller.on('ongen')
 
-            elif isenginerunning():
-                  # xodats
-                  controller.off('starter')
-                  controller.off('podsos')
-                  controller.on('onoff')
-                  controller.on('ongen')
-            else:
-                  # xodelu 2/10 sec
-                  controller.on('starter')
-                  controller.on('podsos')
-                  controller.on('onoff')
-                  controller.off('ongen')
-                  time.sleep(2)
-                  controller.off('starter')
-                  time.sleep(10)
+      def killengine(self):
+            self.relaycontroller.off('starter')
+            self.relaycontroller.off('podsos')
+            self.relaycontroller.off('onoff')
+            self.relaycontroller.off('ongen')
+
+      def startengine(self):
+            self.relaycontroller.on('starter')
+            self.relaycontroller.on('podsos')
+            self.relaycontroller.on('onoff')
+            self.relaycontroller.off('ongen')
+            time.sleep(2)
+            self.relaycontroller.off('starter')
+
+class WatchLoop:
+      TIME_KILL_TO_KILL_ENGINE = 10
+      TIME_START_TO_START_ENGINE = 10
+      TIME_START_ENGINE_TO_OPEN_GRID = 5
+
+      def __init__(self, controller: Controller):
+            self.controller = controller
+
+            self.lasttime = {
+                  "startengine": 0, # inuse
+                  "genopengrid": 0,
+
+                  "enginetrue": 0,
+                  "enginefalse": 0,
+
+                  "gridfalse": 0, #inuse
+                  "gridtrue": 0
+            }
+
+      def update(self, gridstatus, enginestatus):
+            self.lasttime['gridtrue' if gridstatus else 'gridfalse'] = time.time()
+            self.lasttime['enginetrue' if enginestatus else 'enginefalse'] = time.time()
+            
+            if gridstatus and enginestatus and \
+               self.lasttime['gridfalse'] + WatchLoop.TIME_KILL_TO_KILL_ENGINE < time.time():
+                  self.controller.killengine()
+            
+            if not gridstatus and enginestatus and \
+               self.lasttime['startengine'] + WatchLoop.TIME_START_ENGINE_TO_OPEN_GRID < time.time():
+                  self.controller.genopengrid()
+
+            if not gridstatus and not enginestatus:
+               if self.lasttime['startengine'] + WatchLoop.TIME_START_TO_START_ENGINE < time.time():
+                  self.controller.startengine()
+                  self.lasttime['startengine'] = time.time()
+            
+
+
+if __name__ == '__main__':
+      loop = WatchLoop(Controller(RelayController()))
+      while True:
+
+            gridstatus = isgridon()
+            enginestatus = isenginerunning()
+
+            print("EngineStatus: %r, GridStatus: %r" % (gridstatus, enginestatus))
+
+            loop.tick(gridstatus, enginestatus)
 
                   
