@@ -93,7 +93,7 @@ if __name__ == '__main__':
             gridstatus = isgridon()
             enginestatus = isenginerunning()
 
-            print("EngineStatus: %r, GridStatus: %r" % (gridstatus, enginestatus))
+            print("GridStatus: %r, EngineStatus: %r" % (gridstatus, enginestatus))
 
             loop.tick(gridstatus, enginestatus)
 
