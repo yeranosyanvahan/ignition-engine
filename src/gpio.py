@@ -1,14 +1,49 @@
 import RPi.GPIO as GPIO
 
-# Set the GPIO mode
-GPIO.setmode(GPIO.BCM)
+class RelayController:
+    def __init__(self):
+        # Set GPIO mode to BCM
+        GPIO.setmode(GPIO.BCM)
 
-# Define the GPIO pin you want to set to low
-gpio_pin = 17
+        # Define the GPIO pins for the relays
+        self.relay_pins = {
+            "relay1": 17,
+            "relay2": 27,
+            "relay3": 22,
+            "relay4": 23,
+        }
 
-# Set the GPIO pin to a low state
-GPIO.setup(gpio_pin, GPIO.OUT)
-GPIO.output(gpio_pin, GPIO.LOW)
+        # Set the pins as OUTPUT
+        GPIO.setup(list(self.relay_pins.values()), GPIO.OUT)
 
-# Cleanup when done
-GPIO.cleanup()
+    def up(self, relay_name):
+        if relay_name in self.relay_pins:
+            GPIO.output(self.relay_pins[relay_name], GPIO.HIGH)
+        else:
+            print(f"Unknown relay: {relay_name}")
+
+    def down(self, relay_name):
+        if relay_name in self.relay_pins:
+            GPIO.output(self.relay_pins[relay_name], GPIO.LOW)
+        else:
+            print(f"Unknown relay: {relay_name}")
+
+    def cleanup(self):
+        # Clean up and release the GPIO pins
+        GPIO.cleanup()
+
+# Example usage:
+if __name__ == "__main__":
+    relay_controller = RelayController()
+
+    # Turn on a relay
+    relay_controller.up("relay1")
+
+    # Wait for a few seconds (example delay)
+    input("Press Enter to continue...")
+
+    # Turn off a relay
+    relay_controller.down("relay1")
+
+    # Clean up GPIO pins when done
+    relay_controller.cleanup()
