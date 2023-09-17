@@ -51,7 +51,7 @@ class Controller:
 class WatchLoop:
       TIME_LATENCY_TO_KILL_ENGINE = 10
       TIME_LATENCY_TO_START_ENGINE = 3
-      TIME_START_ENGINE_TO_FAIL_PERIOD = 20
+      TIME_START_ENGINE_TO_FAIL_PERIOD = 60
 
       TIME_START_TO_START_ENGINE = 10
       TIME_START_ENGINE_TO_OPEN_GRID = 10
@@ -90,6 +90,7 @@ class WatchLoop:
 
             if not gridstatus and not enginestatus:
                if self.lasttime['gridtrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time():
+                    self.controller.killengine()
                     raise Exception("THE ENGINE FAILED TO START")
                                    
                elif self.lasttime['startengine'] + WatchLoop.TIME_START_TO_START_ENGINE < time.time() and \
