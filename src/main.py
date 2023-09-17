@@ -51,7 +51,8 @@ class Controller:
 class WatchLoop:
       TIME_LATENCY_TO_KILL_ENGINE = 10
       TIME_LATENCY_TO_START_ENGINE = 3
-      TIME_START_ENGINE_TO_FAIL_PERIOD = 60
+      TIME_NOPOWER_TO_FAIL_PERIOD = 60
+      TIME_FAIL_TO_START_ENGINE = 3
 
       TIME_START_TO_START_ENGINE = 10
       TIME_START_ENGINE_TO_OPEN_GRID = 10
@@ -89,13 +90,14 @@ class WatchLoop:
                   self.controller.genopengrid()
 
             if not gridstatus and not enginestatus:
-               if self.lasttime['gridtrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time() and \
-                  self.lasttime['enginetrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time():
+               if self.lasttime['gridtrue'] + WatchLoop.TIME_NOPOWER_TO_FAIL_PERIOD < time.time() and \
+                  self.lasttime['enginetrue'] + WatchLoop.TIME_NOPOWER_TO_FAIL_PERIOD < time.time():
                     self.controller.killengine()
                     raise Exception("THE ENGINE FAILED TO START")
                                    
                elif self.lasttime['startengine'] + WatchLoop.TIME_START_TO_START_ENGINE < time.time() and \
-                  self.lasttime['gridtrue'] + WatchLoop.TIME_LATENCY_TO_START_ENGINE < time.time():
+                  self.lasttime['gridtrue'] + WatchLoop.TIME_LATENCY_TO_START_ENGINE < time.time() and \
+                  self.lasttime['enginetrue'] + WatchLoop.TIME_FAIL_TO_START_ENGINE < time.time():
 
                   self.controller.startengine()
                   self.lasttime['startengine'] = time.time()
