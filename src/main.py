@@ -113,6 +113,9 @@ if __name__ == '__main__':
                   else:
                        print(f"OSError occured: {e}")
                   time.sleep(2)
+            except e:
+                 print("EXCEPTION")
+                 time.sleep(2)
 
 
                   
