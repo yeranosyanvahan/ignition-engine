@@ -50,10 +50,10 @@ class Controller:
 
 class WatchLoop:
       TIME_LATENCY_TO_KILL_ENGINE = 10
-      TIME_LATENCY_TO_START_ENGINE = 10
+      TIME_LATENCY_TO_START_ENGINE = 3
 
       TIME_START_TO_START_ENGINE = 10
-      TIME_START_ENGINE_TO_OPEN_GRID = 5
+      TIME_START_ENGINE_TO_OPEN_GRID = 10
 
       def __init__(self, controller: Controller):
             self.controller = controller
