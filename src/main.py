@@ -62,14 +62,14 @@ class WatchLoop:
             self.controller = controller
 
             self.lasttime = {
-                  "startengine": 0, # inuse
-                  "genopengrid": 0,
+                  "startengine": time.time(),
+                  "genopengrid": time.time(),
 
-                  "enginetrue": 0,
-                  "enginefalse": 0,
+                  "enginetrue": time.time(),
+                  "enginefalse": time.time(),
 
-                  "gridfalse": 0, #inuse
-                  "gridtrue": 0
+                  "gridfalse": time.time(),
+                  "gridtrue": time.time()
             }
 
       def tick(self, gridstatus, enginestatus):
@@ -89,7 +89,7 @@ class WatchLoop:
                   self.controller.genopengrid()
 
             if not gridstatus and not enginestatus:
-               if self.lasttime['gridtrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD > time.time():
+               if self.lasttime['gridtrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time():
                     raise Exception("THE ENGINE FAILED TO START")
                                    
                elif self.lasttime['startengine'] + WatchLoop.TIME_START_TO_START_ENGINE < time.time() and \
