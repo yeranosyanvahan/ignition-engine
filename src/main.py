@@ -98,13 +98,10 @@ class WatchLoop:
 if __name__ == '__main__':
       loop = WatchLoop(Controller(RelayController()))
       while True:
-
-            gridstatus = isgridon()
-            enginestatus = isenginerunning()
-
-            print("GridStatus: %r, EngineStatus: %r" % (gridstatus, enginestatus))
-
             try:
+                  gridstatus = isgridon()
+                  enginestatus = isenginerunning()
+                  print("GridStatus: %r, EngineStatus: %r" % (gridstatus, enginestatus))
                   loop.tick(gridstatus, enginestatus)
 
             except OSError as e:
