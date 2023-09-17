@@ -89,7 +89,8 @@ class WatchLoop:
                   self.controller.genopengrid()
 
             if not gridstatus and not enginestatus:
-               if self.lasttime['gridtrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time():
+               if self.lasttime['gridtrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time() and \
+                  self.lasttime['enginetrue'] + WatchLoop.TIME_START_ENGINE_TO_FAIL_PERIOD < time.time():
                     self.controller.killengine()
                     raise Exception("THE ENGINE FAILED TO START")
                                    
