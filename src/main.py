@@ -81,7 +81,7 @@ class WatchLoop:
                  
             
             if not gridstatus and enginestatus \
-                  and self.lasttime['enginetrue'] + WatchLoop.TIME_LATENCY_TO_OPEN_PODSOS:
+                  and self.lasttime['enginefalse'] + WatchLoop.TIME_LATENCY_TO_OPEN_PODSOS < time.time():
                self.controller.off('podsos')
 
                if self.lasttime['enginefalse'] + WatchLoop.TIME_START_ENGINE_TO_OPEN_GRID < time.time():                  
